@@ -10,4 +10,17 @@ let A_Parser str =
     else
         (false, str)
 
+let pchar charToMatch str =
+    if String.IsNullOrEmpty(str) then
+        let msg = "No more input"
+        (msg, "")
+    else if str.[0] = charToMatch then
+        let msg = sprintf "Found %c" charToMatch
+        let remaining = str.[1..]
+        (msg, remaining)
+    else
+        let first = str.[0]
+        let msg = sprintf "Expecting '%c'. Got '%c'" charToMatch first
+        (msg, str) 
+
 

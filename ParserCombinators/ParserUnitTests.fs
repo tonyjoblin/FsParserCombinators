@@ -6,7 +6,7 @@ open NUnit.Framework
 type parserFixture() = class
     
     [<Test>]
-    member self.TestABC() =
+    member self.TestAparserABC() =
         let input = "ABC"
 
         let result = parser.A_Parser input
@@ -14,7 +14,7 @@ type parserFixture() = class
         Assert.AreEqual((true, "BC"), result)
 
     [<Test>]
-    member self.TestZBC() =
+    member self.TestAparserZBC() =
         let input = "ZBC"
 
         let result = parser.A_Parser input
@@ -22,7 +22,7 @@ type parserFixture() = class
         Assert.AreEqual((false, input), result)
 
     [<Test>]
-    member self.TestEmptyString() =
+    member self.TestAparserEmptyString() =
         let input = System.String.Empty
 
         let result = parser.A_Parser input
@@ -30,11 +30,29 @@ type parserFixture() = class
         Assert.AreEqual((false, input), result)
 
     [<Test>]
-    member self.TestNullString() =
+    member self.TestAparserNullString() =
         let input = null
 
         let result = parser.A_Parser input
 
         Assert.AreEqual((false, System.String.Empty), result)
+
+    [<Test>]
+    member self.TestPcharABC() = 
+        let input = "ABC"
+        let (msg, remaining) = parser.pchar 'A' input
+        Assert.AreEqual("BC", remaining)
+
+    [<Test>]
+    member self.TestPcharZBC() = 
+        let input = "ZBC"
+        let (msg, remaining) = parser.pchar 'A' input
+        Assert.AreEqual("ZBC", remaining)
+
+    [<Test>]
+    member self.TestPcharEmptyString() = 
+        let input = ""
+        let (msg, remaining) = parser.pchar 'A' input
+        Assert.AreEqual("", remaining)
 
 end
