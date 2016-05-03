@@ -40,19 +40,25 @@ type parserFixture() = class
     [<Test>]
     member self.TestPcharABC() = 
         let input = "ABC"
-        let (msg, remaining) = parser.pchar 'A' input
-        Assert.AreEqual("BC", remaining)
+        let result = parser.pchar 'A' input
+        let expectedResult = parser.Success ('A', "BC")
+        Assert.AreEqual(expectedResult, result)
 
     [<Test>]
     member self.TestPcharZBC() = 
         let input = "ZBC"
-        let (msg, remaining) = parser.pchar 'A' input
-        Assert.AreEqual("ZBC", remaining)
+        let result = parser.pchar 'A' input
+        match result with
+        | parser.Failure _ -> () // ok
+        | parser.Success _ -> Assert.Fail()
 
     [<Test>]
     member self.TestPcharEmptyString() = 
         let input = ""
-        let (msg, remaining) = parser.pchar 'A' input
-        Assert.AreEqual("", remaining)
+        let result = parser.pchar 'A' input
+        let expectedResult = parser.Failure "No more input"
+        match result with
+        | parser.Failure "No more input" -> () // ok
+        | _ -> Assert.Fail()
 
 end
