@@ -69,3 +69,9 @@ let anyOf listOfChars =
     listOfChars
     |> List.map pchar
     |> choice
+
+let parseLowerCase =
+    anyOf ['a'..'z']
+
+let parseDigit =
+    anyOf ['0'..'9']

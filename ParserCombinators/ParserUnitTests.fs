@@ -100,4 +100,47 @@ type parserFixture() = class
         | Failure err -> () // expected
         | _ -> Assert.Fail()
 
+    [<Test>]
+    member self.TestParseLowerCaseSuccess() =
+        let parser = parseLowerCase
+        let input = "aBC"
+
+        let result = run parser input
+
+        match result with
+        | Success ('a', "BC") -> () // expected
+        | _ -> Assert.Fail()
+
+    [<Test>]
+    member self.TestParseLowerCaseFailure() =
+        let parser = parseLowerCase
+        let input = "ABC"
+
+        let result = run parser input
+
+        match result with
+        | Failure err -> () // expected
+        | _ -> Assert.Fail()
+
+    member self.TestParseDigitSuccess() =
+        let parser = parseDigit
+        let input = "1BC"
+
+        let result = run parser input
+
+        match result with
+        | Success ('1', "BC") -> () // expected
+        | _ -> Assert.Fail()
+
+    [<Test>]
+    member self.TestParseDigitFailure() =
+        let parser = parseDigit
+        let input = "ABC"
+
+        let result = run parser input
+
+        match result with
+        | Failure err -> () // expected
+        | _ -> Assert.Fail()
+
 end
