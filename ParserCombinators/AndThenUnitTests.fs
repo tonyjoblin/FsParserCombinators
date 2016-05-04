@@ -5,13 +5,16 @@ open parser
 
 [<TestFixture>]
 type andThenUnitTestFixture() = class
+
+    member self.parseA = pchar 'A'
+    member self.parseB = pchar 'B'
+    member self.parseAthenB = andThen self.parseA self.parseB
     
     [<Test>]
     member self.TestParseAThenB() =
-        let parseAthenB = andThen parseA parseB
         let input = "ABC"
 
-        let result = run parseAthenB input
+        let result = run self.parseAthenB input
 
         match result with
         | Success (('A', 'B'), "C") -> () // expected
@@ -21,10 +24,9 @@ type andThenUnitTestFixture() = class
 
     [<Test>]
     member self.TestParseAThenBFailsOnZBC() =
-        let parseAthenB = andThen parseA parseB
         let input = "ZBC"
 
-        let result = run parseAthenB input
+        let result = run self.parseAthenB input
 
         match result with
         | Success (('A', 'B'), "C") -> Assert.Fail()
@@ -34,7 +36,7 @@ type andThenUnitTestFixture() = class
 
     [<Test>]
     member self.TestInfixAndThen() =
-        let parseAthenB = parseA .>>. parseB
+        let parseAthenB = self.parseA .>>. self.parseB
         let input = "ABC"
 
         let result = run parseAthenB input

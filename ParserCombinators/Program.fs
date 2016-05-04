@@ -6,6 +6,4 @@ open parser
 [<EntryPoint>]
 let main argv = 
 
-    let parseAThenB = andThen parseA parseB
-
     0 // return an integer exit code

@@ -6,7 +6,9 @@ open parser
 [<TestFixture>]
 type orElseUnitTestFixture() = class
 
-    member self.parseAorB = orElse parseA parseB
+    member self.parseA = pchar 'A'
+    member self.parseB = pchar 'B'
+    member self.parseAorB = orElse self.parseA self.parseB
 
     member self.testUsing input =
         run self.parseAorB input
@@ -52,7 +54,7 @@ type orElseUnitTestFixture() = class
 
     member self.TestInfixOrElse() =
         let input = "ABC"
-        let parser = parseA <|> parseB
+        let parser = self.parseA <|> self.parseB
 
         let result = run parser input
 

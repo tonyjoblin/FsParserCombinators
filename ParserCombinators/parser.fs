@@ -23,10 +23,6 @@ let pchar charToMatch =
 
     Parser inner
 
-let parseA = pchar 'A'
-
-let parseB = pchar 'B'
-
 let run parser input =
     let (Parser fn) = parser
     fn input
@@ -65,4 +61,7 @@ let orElse parser1 parser2 =
     Parser innerFn
 
 let (<|>) = orElse
+
+let choice listOfParsers =
+    List.reduce (<|>) listOfParsers
 
