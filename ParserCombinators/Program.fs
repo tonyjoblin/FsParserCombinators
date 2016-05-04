@@ -1,16 +1,11 @@
 ﻿// Learn more about F# at http://fsharp.net
 // See the 'F# Tutorial' project for more help.
 
-let testParser str =
-    printfn "%A" (parser.A_Parser str)
+open parser
 
 [<EntryPoint>]
 let main argv = 
 
-    testParser ""
-
-    testParser "ABC"
-
-    testParser "ZBC"
+    let parseAThenB = andThen parseA parseB
 
     0 // return an integer exit code
