@@ -65,3 +65,7 @@ let (<|>) = orElse
 let choice listOfParsers =
     List.reduce (<|>) listOfParsers
 
+let anyOf listOfChars =
+    listOfChars
+    |> List.map pchar
+    |> choice

@@ -78,4 +78,26 @@ type parserFixture() = class
         | Failure err -> () // expected
         | _ -> Assert.Fail()
 
+    [<Test>]
+    member self.TestAnyOfSuccess() =
+        let parser = anyOf ['A'; 'B']
+        let input = "ABC"
+
+        let result = run parser input
+
+        match result with
+        | Success ('A', "BC") -> () // expected
+        | _ -> Assert.Fail()
+
+    [<Test>]
+    member self.TestAnyOfFailure() =
+        let parser = anyOf ['A'; 'B']
+        let input = "XYZ"
+
+        let result = run parser input
+
+        match result with
+        | Failure err -> () // expected
+        | _ -> Assert.Fail()
+
 end
