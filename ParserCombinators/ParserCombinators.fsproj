@@ -57,6 +57,7 @@
     <Compile Include="parser.fs" />
     <Compile Include="ParserUnitTests.fs" />
     <Compile Include="AndThenUnitTests.fs" />
+    <Compile Include="OrElseUnitTests.fs" />
     <Compile Include="Program.fs" />
     <None Include="App.config" />
     <Content Include="packages.config" />

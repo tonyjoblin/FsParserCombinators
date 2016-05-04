@@ -31,7 +31,7 @@ let run parser input =
     let (Parser fn) = parser
     fn input
 
-let andThen (parser1: Parser<'a>) (parser2: Parser<'a>) =
+let andThen parser1 parser2 =
 
     let innerFn input =
         let result1 = run parser1 input
@@ -50,3 +50,19 @@ let andThen (parser1: Parser<'a>) (parser2: Parser<'a>) =
     Parser innerFn
 
 let (.>>.) = andThen
+
+
+let orElse parser1 parser2 =
+    
+    let innerFn input = 
+        let result1 = run parser1 input
+        match result1 with
+        | Failure err ->
+            run parser2 input
+        | Success result ->
+            result1
+
+    Parser innerFn
+
+let (<|>) = orElse
+
