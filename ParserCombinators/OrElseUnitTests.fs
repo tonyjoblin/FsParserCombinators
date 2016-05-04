@@ -4,7 +4,7 @@ open NUnit.Framework
 open parser
 
 [<TestFixture>]
-type andThenUnitTestFixture() = class
+type orElseUnitTestFixture() = class
 
     member self.parseAorB = orElse parseA parseB
 
@@ -12,7 +12,7 @@ type andThenUnitTestFixture() = class
         run self.parseAorB input
    
     [<Test>]
-    member self.TestParseAorBinAEFsuccess() =
+    member self.TestParseAOrBInAEFSuccess() =
         let input = "AEF"
 
         let result = self.testUsing input
@@ -22,7 +22,7 @@ type andThenUnitTestFixture() = class
         | Failure err -> Assert.Fail()
         | _ -> Assert.Fail()
 
-    member self.TestParseAorBinBEFsuccess() =
+    member self.TestParseAOrBInBEFSuccess() =
         let input = "BEF"
 
         let result = self.testUsing input
@@ -32,10 +32,8 @@ type andThenUnitTestFixture() = class
         | Failure err -> Assert.Fail()
         | _ -> Assert.Fail()
 
-
-    [<Test>]
-    member self.TestParseAThenBFailsOnZBC() =
-        let input = "ZBC"
+    member self.TestParseAOrBInXFails() =
+        let input = "X"
 
         let result = self.testUsing input
 
@@ -43,13 +41,20 @@ type andThenUnitTestFixture() = class
         | Success _ -> Assert.Fail()
         | Failure err -> () // expected
 
+    member self.TestParseAOrBInEmptyStringFails() =
+        let input = ""
 
-    [<Test>]
-    member self.TestInfixAndThen() =
-        let parseAorB = parseA <|> parseB
+        let result = self.testUsing input
+
+        match result with
+        | Success _ -> Assert.Fail()
+        | Failure err -> () // expected
+
+    member self.TestInfixOrElse() =
         let input = "ABC"
+        let parser = parseA <|> parseB
 
-        let result = run parseAorB input
+        let result = run parser input
 
         match result with
         | Success (('A'), "BC") -> () // expected
