@@ -75,3 +75,23 @@ let parseLowerCase =
 
 let parseDigit =
     anyOf ['0'..'9']
+
+let mapP f parser =
+    
+    let innerFn input =
+        let result = run parser input
+        match result with
+        | Success (value, remaining) ->
+            let newValue = f value
+            Success (newValue, remaining)
+        | Failure err -> 
+            result
+    Parser innerFn
+
+let (<!>) = mapP
+
+let (|>>) x f = mapP f x
+
+let parseThreeDigitsAsStr =
+    parseDigit .>>. parseDigit .>>. parseDigit
+
