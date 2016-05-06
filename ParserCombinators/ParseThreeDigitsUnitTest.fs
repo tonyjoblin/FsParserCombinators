@@ -27,3 +27,13 @@ type parseThreeDigitsUnitTestFixture() =
         | Failure err -> () // expected Assert.Fail()
         | _ -> Assert.Fail()
 
+    [<Test>]
+    member self.TestParseThreeDigitsAsIntSuccess() =
+        let input = "123 cat"
+
+        let result = run parseThreeDigitsAsInt input
+
+        match result with
+        | Success (123, " cat") -> () // expected
+        | Failure err -> Assert.Fail()
+        | _ -> Assert.Fail()

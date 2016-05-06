@@ -98,3 +98,6 @@ let parseThreeDigitsAsStr =
         String [|c1; c2; c3|]
     mapP transformTuple tupleParser
 
+let parseThreeDigitsAsInt =
+    mapP int parseThreeDigitsAsStr
+
