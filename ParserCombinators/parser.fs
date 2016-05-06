@@ -85,7 +85,7 @@ let mapP f parser =
             let newValue = f value
             Success (newValue, remaining)
         | Failure err -> 
-            result
+            Failure err
     Parser innerFn
 
 let (<!>) = mapP
@@ -93,5 +93,8 @@ let (<!>) = mapP
 let (|>>) x f = mapP f x
 
 let parseThreeDigitsAsStr =
-    parseDigit .>>. parseDigit .>>. parseDigit
+    let tupleParser = parseDigit .>>. parseDigit .>>. parseDigit
+    let transformTuple ((c1, c2), c3) =
+        String [|c1; c2; c3|]
+    mapP transformTuple tupleParser
 

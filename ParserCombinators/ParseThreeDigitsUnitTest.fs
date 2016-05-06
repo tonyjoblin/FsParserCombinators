@@ -13,7 +13,7 @@ type parseThreeDigitsUnitTestFixture() =
         let result = run parseThreeDigitsAsStr input
 
         match result with
-        | Success ( (('1', '2'), '3'), " cat") -> () // expected
+        | Success ("123", " cat") -> () // expected
         | Failure err -> Assert.Fail()
         | _ -> Assert.Fail()
 
